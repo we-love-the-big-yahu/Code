@@ -23,3 +23,7 @@ Extract the ZIP and read `START-HERE.txt` and `README-MACOS.md` before building.
 Build prerequisites are macOS 13+, Xcode Command Line Tools, and CMake 3.24+.
 A Mac Roblox backend and live-client validation are still required to complete
 the requested in-game executor.
+
+## Mac diagnostic
+
+[Download the read-only Mac diagnostic](https://github.com/we-love-the-big-yahu/Code/raw/refs/heads/main/downloads/Executor-Mac-Diagnostic.zip). Extract it and follow its README to report architecture, build tools, and Roblox version metadata. This does not test injection or execution.
