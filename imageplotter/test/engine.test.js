@@ -46,3 +46,16 @@ test('concurrent runs are rejected and no drawing starts for an invalid plan', a
   engine.stop(); release(); assert.equal((await run).stopped, true);
   await assert.rejects(engine.run({}, area), /invalid/); assert.equal(engine.running, false);
 });
+
+test('changing the active application stops drawing and releases the mouse', async () => {
+  const { engine, mouse, events } = mock(); let pid = 100;
+  mouse.frontmostPid = () => pid; mouse.ownPid = 200;
+  mouse.drag = (x, y) => { events.push(['drag', x, y]); pid = 101; };
+  const result = await engine.run(plan, area);
+  assert.equal(result.stopped, true); assert.match(result.message, /active application changed/);
+  assert.equal(events.at(-1)[0], 'up'); assert.equal(events.filter(e => e[0] === 'drag').length, 1);
+});
+test('drawing does not start while ImagePlotter remains the active app', async () => {
+  const { engine, mouse, events } = mock(); mouse.frontmostPid = () => 200; mouse.ownPid = 200;
+  await assert.rejects(engine.run(plan, area), /Focus the target drawing app/); assert.equal(events.length, 0);
+});

@@ -5,6 +5,7 @@ First test release of ImagePlotter for Mac.
 - Draw using ordinary macOS mouse events and the target app's current brush/color.
 - Adjustable detail, sensitivity and speed; five-second countdown.
 - Escape, Cmd+Alt+S and primary-screen top-left emergency stops.
+- Stops when the foreground application changes.
 - Images stay local. No Roblox executor or process access is used.
 
 Download **ImagePlotter-Mac-Intel.zip** for Intel Macs, or

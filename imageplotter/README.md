@@ -34,7 +34,7 @@ No Python, Node, CMake, or Xcode installation is needed to run it.
    drawing canvas. Keep the canvas stationary and the target brush selected.
 5. Press **Escape** to stop immediately. A second stop shortcut is **Cmd+Alt+S**.
    Moving the pointer to the primary screen's top-left corner also stops it.
-   Opening ImagePlotter during drawing stops the current drawing.
+   Opening ImagePlotter or switching to another application during drawing stops the current drawing.
 
 Test a simple picture at a slow speed first. Applications that reject simulated
 mouse input, require a special brush/input mode, move their canvas, or throttle

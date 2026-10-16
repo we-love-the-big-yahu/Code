@@ -15,9 +15,21 @@ class MacMouse {
     this.location = graphics.func('CGEventGetLocation', Point, ['void *']);
     this.trusted = services.func('AXIsProcessTrusted', 'bool', []);
     this.pressure = graphics.func('CGEventSetDoubleValueField', 'void', ['void *', 'uint32_t', 'double']);
+    const objc = koffi.load('/usr/lib/libobjc.A.dylib');
+    const getClass = objc.func('objc_getClass', 'void *', ['str']);
+    const selector = objc.func('sel_registerName', 'void *', ['str']);
+    this.sendObject = objc.func('objc_msgSend', 'void *', ['void *', 'void *']);
+    this.sendPid = objc.func('objc_msgSend', 'int32_t', ['void *', 'void *']);
+    this.workspace = this.sendObject(getClass('NSWorkspace'), selector('sharedWorkspace'));
+    this.frontSelector = selector('frontmostApplication'); this.pidSelector = selector('processIdentifier');
+    this.ownPid = process.pid;
     this.last = null;
   }
   hasPermission() { return this.trusted(); }
+  frontmostPid() {
+    const application = this.sendObject(this.workspace, this.frontSelector);
+    return application ? this.sendPid(application, this.pidSelector) : 0;
+  }
   position() {
     const event = this.event(null); if (!event) throw new Error('Cannot read the mouse position.');
     try { return this.location(event); } finally { this.release(event); }
