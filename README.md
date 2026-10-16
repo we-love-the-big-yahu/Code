@@ -1,3 +1,20 @@
+# ImagePlotter for Mac
+
+Turn an image into mouse-drawn line art or a shaded sketch on a canvas you select.
+This app uses normal macOS mouse input, independently of Roblox executors.
+
+[ImagePlotter downloads](https://github.com/we-love-the-big-yahu/Code/releases/tag/imageplotter-v0.1.1)
+· [Instructions and source](imageplotter/README.md)
+· [Build checks](https://github.com/we-love-the-big-yahu/Code/actions/workflows/imageplotter.yml)
+
+Choose **ImagePlotter-Mac-Intel.zip** for Intel, or **ImagePlotter-Mac-Apple-Silicon.zip**
+for Apple silicon. Native app bundles are published after the macOS build checks pass.
+Enable the app in **Privacy & Security → Accessibility** for mouse drawing. Preview
+and choose your brush/color before starting. Escape stops drawing. Compatibility
+with a particular game or website still requires testing.
+
+---
+
 # Mac executor source-port downloads
 
 **These are incomplete source ports, not ready-to-run Mac executors.**

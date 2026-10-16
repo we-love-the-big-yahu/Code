@@ -12,7 +12,7 @@ const root = path.resolve(__dirname, '..');
   const checksums = JSON.parse(await fs.readFile(path.join(root, 'node_modules/electron/checksums.json'), 'utf8'));
   const results = await packager({ dir: stage, name: 'ImagePlotter', appBundleId: 'com.imageplotter.desktop', platform: 'darwin', arch,
     electronVersion: version, asar: false, out, overwrite: true, prune: false, icon: path.join(root, 'assets/icon.icns'),
-    appVersion: '0.1.0', buildVersion: '1', appCopyright: 'ImagePlotter contributors',
+    appVersion: require('../package.json').version, buildVersion: require('../package.json').version, appCopyright: 'ImagePlotter contributors',
     download: { cacheRoot: '/tmp/imageplotter-electron-cache', checksums },
     extendInfo: { NSHumanReadableCopyright: 'ImagePlotter contributors', NSAccessibilityUsageDescription: 'ImagePlotter uses mouse control to draw your chosen image inside the canvas area you select.' }
   });

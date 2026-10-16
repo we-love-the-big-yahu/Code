@@ -1,6 +1,6 @@
 {
   "name": "imageplotter",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Draw an image onto a selected Mac canvas using mouse strokes.",
   "main": "src/main.js",
   "private": true,

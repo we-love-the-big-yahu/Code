@@ -57,5 +57,5 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release view imageplotter-v0.1.0 --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1 || gh release create imageplotter-v0.1.0 --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --title 'ImagePlotter 0.1.0 — Mac test build' --notes-file imageplotter/RELEASE-NOTES.md --prerelease
-          gh release upload imageplotter-v0.1.0 release-files/*.zip --repo "$GITHUB_REPOSITORY" --clobber
+          gh release view imageplotter-v0.1.1 --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1 || gh release create imageplotter-v0.1.1 --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --title 'ImagePlotter 0.1.1 — Mac test build' --notes-file imageplotter/RELEASE-NOTES.md --prerelease
+          gh release upload imageplotter-v0.1.1 release-files/*.zip --repo "$GITHUB_REPOSITORY" --clobber
