@@ -1,0 +1,61 @@
+name: ImagePlotter Mac app
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['imageplotter/**', '.github/workflows/imageplotter.yml']
+permissions:
+  contents: read
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: macos-15-intel
+            arch: x64
+            label: Intel
+          - runner: macos-15
+            arch: arm64
+            label: Apple-Silicon
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: imageplotter
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: imageplotter/package-lock.json
+      - run: npm ci --no-audit --no-fund
+      - run: npm test
+      - name: Package native Mac app and verify signing
+        run: npm run package:${{ matrix.arch == 'x64' && 'intel' || 'apple' }}
+      - name: Check packaged UI, worker and native API loading without mouse input
+        run: dist/ImagePlotter-darwin-${{ matrix.arch }}/ImagePlotter.app/Contents/MacOS/ImagePlotter --smoke-test
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ImagePlotter-${{ matrix.label }}
+          path: imageplotter/dist/ImagePlotter-Mac-${{ matrix.label }}.zip
+          if-no-files-found: error
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: ImagePlotter-*
+          path: release-files
+          merge-multiple: true
+      - name: Publish tested app bundles
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view imageplotter-v0.1.0 --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1 || gh release create imageplotter-v0.1.0 --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --title 'ImagePlotter 0.1.0 — Mac test build' --notes-file imageplotter/RELEASE-NOTES.md --prerelease
+          gh release upload imageplotter-v0.1.0 release-files/*.zip --repo "$GITHUB_REPOSITORY" --clobber

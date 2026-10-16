@@ -1,0 +1,22 @@
+{
+  "name": "imageplotter",
+  "version": "0.1.0",
+  "description": "Draw an image onto a selected Mac canvas using mouse strokes.",
+  "main": "src/main.js",
+  "private": true,
+  "author": "ImagePlotter contributors",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test test/*.test.js",
+    "package:intel": "node scripts/package.js x64",
+    "package:apple": "node scripts/package.js arm64"
+  },
+  "dependencies": {
+    "koffi": "3.3.3"
+  },
+  "devDependencies": {
+    "@electron/packager": "20.3.0",
+    "electron": "44.7.2"
+  }
+}
